@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Экспедиции Школы Лингвистики</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<!-- Шапка -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow">
+  <a class="navbar-brand ml-5" href="main.html">
+      Экспедиции Школы Лингвистики
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="expeditions.html">Поиск по экспедициям<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Направления
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="north.html">Север</a>
+          <a class="dropdown-item" href="caucasus.html">Кавказ</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contacts.html">Участники проекта</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<main role="main" class="container mt-5 pt-4">
+    <h1>Экспедиции Школы Лингвистики НИУ ВШЭ</h1>
+    <p class="lead pl-5"> На этом сайте вы сможете найти информацию по лингвистическим экспедициям Школы Лингвистики Факультета гуманитарных наук Национального исследовательского университета «Высшая школа экономики». Сайт создан на средства гранта, выделенного Фондом образовательных инноваций НИУ ВШЭ на пост-продакшн по результатам студенческих экспедиций в рамках проекта «Открываем Россию заново».</p>
+    <p class="pl-5">Еще какой-то текст.</p>
+    <p class="pl-5">Может быть еще какой то текст.</p>
+    <h2>География экспедиций</h2>
+    <!-- Карта. Надо автоматически поставить координаты наших сел и деревень -->
+    <div class="row">
+        <script src="http://api-maps.yandex.ru/2.0/?load=package.full&mode=release&lang=ru-RU" type="text/javascript"></script>
+        <script type="text/javascript">
+            ymaps.ready(function () {
+                var myMap = new ymaps.Map("MainMap", {
+                    center: [65, 90],
+                    zoom: 3,
+                    type: "yandex#map"
+                });
+
+                var coords = [
+                [42.73167, 46.31861],
+                [42.0528, 47.3605],
+                [42.0556, 47.3340],
+                [2.35, 98.49],
+                [65.793214, 87.959170],
+                [62.487273, 86.278521]
+                ],
+                myCollection = new ymaps.GeoObjectCollection({}, {
+                preset: 'twirl#blackIcon'});
+
+                for (var i = 0; i < coords.length; i++) {
+                myCollection.add(new ymaps.Placemark(coords[i]));
+                }
+
+                myMap.geoObjects.add(myCollection);
+                myMap.controls.add("typeSelector").add("zoomControl");
+            });
+        </script>
+        <div class="pt-3" id="MainMap" style="width:100%;height:500px;"></div>
+    </div>
+</main>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
