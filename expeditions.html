@@ -36,39 +36,61 @@
         <a class="nav-link" href="contacts.html">Участники проекта</a>
       </li>
     </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Поиск по сайту" aria-label="Search">
+      </form>
   </div>
 </nav>
 <main role="main" class="container mt-5 pt-4">
     <div id="dtBasicExample_wrapper" class="dataTables_wrapper dt-bootstrap4">
         <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <div id="dtBasicExample_filter" class="dataTables_filter">
-                    <label>Поиск:
-                    <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-sm-12">
+                <p>Тут можно будет искать и сортировать, а ряды будут ссылками</p>
                 <table id="dtBasicExample" class="table table-hover table-bordered table-sm dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="dtBasicExample_info" style="width: 100%;">
                   <thead>
                     <tr role="row">
                         <th class="th-sm sorting" tabindex="0" aria-controls="dtBasicExample" rowspan="1" colspan="1" aria-label="Name
-                      : activate to sort column ascending" style="width: 86.2px;">Год
+                      : activate to sort column ascending">Год
                       </th>
                         <th class="th-sm sorting" tabindex="0" aria-controls="dtBasicExample" rowspan="1" colspan="1" aria-label="Position
-                      : activate to sort column ascending" style="width: 140.2px;">Язык
+                      : activate to sort column ascending">Язык
                       </th>
                         <th class="th-sm sorting" tabindex="0" aria-controls="dtBasicExample" rowspan="1" colspan="1" aria-label="Office
-                      : activate to sort column ascending" style="width: 59.2px;">Направление
+                      : activate to sort column ascending">Направление
                       </th>
                         <th class="th-sm sorting" tabindex="0" aria-controls="dtBasicExample" rowspan="1" colspan="1" aria-label="Age
-                      : activate to sort column ascending" style="width: 59.2px;">Руководитель
+                      : activate to sort column ascending">Руководитель
                       </th>
                         <th class="th-sm sorting" tabindex="0" aria-controls="dtBasicExample" rowspan="1" colspan="1" aria-label="Start date
-                      : activate to sort column ascending" style="width: 59.2px;">Населенный пункт
+                      : activate to sort column ascending">Населенный пункт
                       </th>
+                    </tr>
+                    <tr role="row">
+                        <td>
+                          <div id="dtBasicExample_filter" class="dataTables_filter">
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                          </div>
+                        </td>
+                        <td>
+                          <div id="dtBasicExample_filter" class="dataTables_filter">
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                          </div>
+                        </td>
+                        <td>
+                          <div id="dtBasicExample_filter" class="dataTables_filter">
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                          </div>
+                        </td>
+                        <td>
+                          <div id="dtBasicExample_filter" class="dataTables_filter">
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                          </div>
+                        </td>
+                        <td>
+                          <div id="dtBasicExample_filter" class="dataTables_filter">
+                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dtBasicExample">
+                          </div>
+                        </td>
                     </tr>
                   </thead>
                   <tbody>
@@ -97,6 +119,10 @@
             </div>
         </div>
     </div>
+  <footer class="border-top my-3 pt-3 text-center">
+    <img class="mb-2" src="http://abali.ru/wp-content/uploads/2013/06/emblema_vysshej_shkoly_jekonomik_vshje.png" alt="" width="24" height="24">
+    <small class="d-block mb-3 text-muted">© 2019</small>
+  </footer>
 </main>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

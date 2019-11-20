@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Экспедиции на кольский полуостров</title>
+    <title>Экспедиции на север</title>
   </head>
   <body>
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow">
@@ -37,11 +37,14 @@
         <a class="nav-link" href="contacts.html">Участники проекта</a>
       </li>
     </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Поиск по сайту" aria-label="Search">
+      </form>
   </div>
 </nav>
 <main role="main" class="container mt-5 pt-4">
-  <h1>Экспедиции на Европейский Север</h1>
-  <p class="'lead my-4">Как классно ездить на кольский полуостров. Вот мы ездим туда, Ну может один раз, может два. Вот нам так нравится. Вот какие языки там есть. Ура!</p>
+  <h1>Экспедиции на Север</h1>
+  <p class="'lead my-4">Как классно ездить на Север. Вот мы ездим туда, Ну может один раз, может два. Вот нам так нравится. Вот какие языки там есть. Ура!</p>
   <div class="accordion" id="accordionLanguages">
     <div class="card border-0">
       <div class="card-header border" id="headingSaami">
@@ -51,13 +54,24 @@
           </button>
         </h2>
       </div>
-
-      <div id="collapseSaami" class="collapse show" aria-labelledby="headingSaami" data-parent="#accordionLanguages">
-        <div class="card-body list-group p-0 rounded-0 list-group-horizontal">
-          <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">2014</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">2015</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">2017 весна</a>
-          <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">2017 лето</a>
+      <div id="collapseSaami" class="collapse" aria-labelledby="headingSaami" data-parent="#accordionLanguages">
+        <div class="card-body p-0">
+          <div class="accordion" id="accordionSaami">
+            <div class="card rounded-0 border-bottom border-left-0 border-right-0 border-top-0">
+              <div class="card-header border bg-white" id="accordionSaamiLovozero">
+                <h2 class="mb-0 pl-4">
+                  <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapseSaamiLovozero" aria-expanded="true" aria-controls="collapseSaamiLovozero">
+                    Ловозеро
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseSaamiLovozero" class="collapse show" aria-labelledby="accordionSaamiLovozero" data-parent="#accordionSaami">
+                <div class="card-body list-group p-0 rounded-0 list-group-horizontal">
+                  <a href="19lov.html" class="list-group-item list-group-item-action list-group-item-secondary">2019</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -70,8 +84,23 @@
         </h2>
       </div>
       <div id="collapseKarelian" class="collapse" aria-labelledby="headingKarelian" data-parent="#accordionLanguages">
-        <div class="card-body">
-
+        <div class="card-body p-0">
+          <div class="accordion" id="accordionKarelian">
+            <div class="card rounded-0 border-bottom border-left-0 border-right-0 border-top-0">
+              <div class="card-header border bg-white" id="accordionKarelianPetrozavodsk">
+                <h2 class="mb-0 pl-4">
+                  <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapseKarelianPetrozavodsk" aria-expanded="true" aria-controls="collapseKarelianPetrozavodsk">
+                    Петрозаводск
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseKarelianPetrozavodsk" class="collapse show" aria-labelledby="accordionKarelianPetrozavodsk" data-parent="#accordionKarelian">
+                <div class="card-body list-group p-0 rounded-0 list-group-horizontal">
+                  <a href="19ptz.html" class="list-group-item list-group-item-action list-group-item-secondary">2019</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -84,12 +113,35 @@
         </h2>
       </div>
       <div id="collapseKhanty" class="collapse" aria-labelledby="headingKhanty" data-parent="#accordionLanguages">
-        <div class="card-body">
-
+        <div class="card-body p-0">
+          <div class="accordion" id="accordionKhanty">
+            <div class="card rounded-0 border-bottom border-left-0 border-right-0 border-top-0">
+              <div class="card-header border bg-white" id="accordionKhantyKazym">
+                <h2 class="mb-0 pl-4">
+                  <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#collapseKhantyKazym" aria-expanded="true" aria-controls="collapseKhantyKazym">
+                    Казым
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseKhantyKazym" class="collapse show" aria-labelledby="accordionKhantyKazym" data-parent="#accordionKhanty">
+                <div class="card-body list-group p-0 rounded-0 list-group-horizontal">
+                  <a href="14kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2014</a>
+                  <a href="15kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2015</a>
+                  <a href="16kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2016</a>
+                  <a href="17kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2017</a>
+                  <a href="18kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2018</a>
+                  <a href="19kaz.html" class="list-group-item list-group-item-action list-group-item-secondary">2019</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <footer class="border-top my-3 pt-3 text-center">
+    <img class="mb-2" src="http://abali.ru/wp-content/uploads/2013/06/emblema_vysshej_shkoly_jekonomik_vshje.png" alt="" width="24" height="24">
+    <small class="d-block mb-3 text-muted">© 2019</small>
+  </footer>
 </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
