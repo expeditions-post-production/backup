@@ -7,6 +7,55 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
 
     <title>Саамская экспедиция 2015</title>
   </head>
@@ -25,13 +74,31 @@
         <a class="nav-link" href="expeditions.html">Поиск по экспедициям<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Направления
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="north.html">Север</a>
-          <a class="dropdown-item" href="caucasus.html">Кавказ</a>
-        </div>
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Направления
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="test text-decoration-none text-body" tabindex="-1" href="#">Север<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Карельская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Саамская экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Кавказ<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="mgb.html">Мегебская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Еще экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Чукотка<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Анадырь</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Камчатка</a></li>
+            </ul>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="contacts.html">Участники проекта</a>
@@ -338,5 +405,14 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script>
+  $(document).ready(function(){
+    $('.dropdown-submenu a.test').on("click", function(e){
+      $(this).next('ul').toggle();
+      e.stopPropagation();
+      e.preventDefault();
+    });
+  });
+  </script>
   </body>
 </html>

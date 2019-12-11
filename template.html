@@ -1,21 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>Экспедиции Школы Лингвистики</title>
+
     <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style>
+.dropdown-submenu {
+  position: relative;
+}
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
 
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+</head>
+<body>
+<!-- Шапка -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow">
+  <a class="navbar-brand ml-5" href="main.html">
+      Экспедиции Школы Лингвистики
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="expeditions.html">Поиск по экспедициям<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Направления
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="test text-decoration-none text-body" tabindex="-1" href="#">Север<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Карельская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Саамская экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Кавказ<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="mgb.html">Мегебская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Еще экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Чукотка<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Анадырь</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Камчатка</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contacts.html">Участники проекта</a>
+      </li>
+      <li class="nav-item">
+        <div class="list-group list-group-horizontal ml-2">
+          <a class="list-group-item p-1 text-decoration-none text-white bg-secondary border-secondary" href="#">RU</a>
+          <a class="list-group-item text-secondary p-1 text-decoration-none" href="main-en.html">EN</a>
+        </div>
+      </li>
+    </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Поиск по сайту" aria-label="Search">
+      </form>
+  </div>
+</nav>
+<div class="container">
+  <div class="row"><h1>FGHJKL</h1></div>
+  <div class="row pt-3 mt-3">
+    <h6><div class="badge badge-light border">Казым</div><br><div class="text-center" style="margin-top: -5px">|</div></h6>
+    </div>
+</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
   </body>
 </html>

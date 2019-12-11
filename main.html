@@ -7,7 +7,73 @@
 
     <title>Экспедиции Школы Лингвистики</title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./Leaflet.markercluster-1.4.1/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+
+.pin {
+    position: relative;
+    left: -50%;
+    margin-top: -35px;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+    <script src="./Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
 </head>
 <body>
 <!-- Шапка -->
@@ -25,13 +91,31 @@
         <a class="nav-link" href="expeditions.html">Поиск по экспедициям<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Направления
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="north.html">Север</a>
-          <a class="dropdown-item" href="caucasus.html">Кавказ</a>
-        </div>
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Направления
+        <span class="caret"></span></a>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="test text-decoration-none text-body" tabindex="-1" href="#">Север<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Карельская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Саамская экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Кавказ<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="mgb.html">Мегебская экспедиция</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Еще экспедиция</a></li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu dropdown-item-text">
+            <a class="my-button test text-decoration-none text-body" tabindex="-1" href="#">Чукотка<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" tabindex="-1" href="#">Анадырь</a></li>
+              <li><a class="dropdown-item" tabindex="-1" href="#">Камчатка</a></li>
+            </ul>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="contacts.html">Участники проекта</a>
@@ -55,36 +139,96 @@
     <p class="pl-5">Может быть еще какой то текст.</p>
     <h2>География экспедиций</h2>
     <!-- Карта. Надо автоматически поставить координаты наших сел и деревень -->
-    <div class="row">
-        <script src="http://api-maps.yandex.ru/2.0/?load=package.full&mode=release&lang=ru-RU" type="text/javascript"></script>
-        <script type="text/javascript">
-            ymaps.ready(function () {
-                var myMap = new ymaps.Map("MainMap", {
-                    center: [65, 90],
-                    zoom: 3,
-                    type: "yandex#map"
-                });
+    <div class="row mt-3">
+        <div id="mapid" style="width: 100%; height: 450px; outline: none;" class="shadow leaflet-container leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag col-10" tabindex="0"></div>
+        <div class="col-2 list-group pl-3 overflow-auto" style="height: 450px;">
+            <a href="balkhar.html" class="list-group-item list-group-item-action p-1 pl-2">Балхар</a>
+            <a href="culikana.html" class="list-group-item list-group-item-action p-1 pl-2">Цуликана</a>
+            <a href="shuhty.html" class="list-group-item list-group-item-action p-1 pl-2">Шуxты</a>
+            <a href="megeb.html" class="list-group-item list-group-item-action p-1 pl-2">Мегеб</a>
+            <a href="oboh.html" class="list-group-item list-group-item-action p-1 pl-2">Обох</a>
+            <a href="kuli.html" class="list-group-item list-group-item-action p-1 pl-2">Кули</a>
+            <a href="rikvani.html" class="list-group-item list-group-item-action p-1 pl-2">Риквани</a>
+            <a href="kizhani.html" class="list-group-item list-group-item-action p-1 pl-2">Кижани</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
+            <a href="zilo.html" class="list-group-item list-group-item-action p-1 pl-2">Зило</a>
 
-                var coords = [
-                [42.73167, 46.31861],
-                [42.0528, 47.3605],
-                [42.0556, 47.3340],
-                [2.35, 98.49],
-                [65.793214, 87.959170],
-                [62.487273, 86.278521]
-                ],
-                myCollection = new ymaps.GeoObjectCollection({}, {
-                preset: 'twirl#blackIcon'});
+        </div>
+        <script>
+        var mymap = L.map('mapid').setView([50, 75], 2);
 
-                for (var i = 0; i < coords.length; i++) {
-                myCollection.add(new ymaps.Placemark(coords[i]));
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+            maxZoom: 22,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox.streets'
+        }).addTo(mymap);
+
+        var someFeatures = [{"type": "Feature", "geometry": {"type": "Point", "coordinates": ["46.31861", "42.73167"]}, "properties": {"name": "Зило"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.60138888888889, 42.09111111111111]}, "properties": {"name": "Кубачи"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.56111111111111, 42.098888888888894]}, "properties": {"name": "Урцаки"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.516666666666666, 42.1]}, "properties": {"name": "Сутбук"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["41.61664", "47.26457"]}, "properties": {"name": "Кина"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["42.59488", "46.32636"]}, "properties": {"name": "Карата"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.56666666666667, 42.06666666666667]}, "properties": {"name": "Ураги"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.04833333333333, 42.250277777777775]}, "properties": {"name": "Мегеб"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [48.07083333333334, 42.016666666666666]}, "properties": {"name": "Дарваг"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [48.00972222222222, 42.020833333333336]}, "properties": {"name": "Ерси"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.969166666666666, 42.027499999999996]}, "properties": {"name": "Дюбек"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.03666666666666, 42.283055555555556]}, "properties": {"name": "Обох"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.999722222222225, 42.246944444444445]}, "properties": {"name": "Шангода"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.015277777777776, 42.20527777777778]}, "properties": {"name": "Ури"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.0225, 42.20722222222223]}, "properties": {"name": "Мукар"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.302499999999995, 42.34777777777778]}, "properties": {"name": "Чуни"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.32972222222222, 42.343333333333334]}, "properties": {"name": "Цухта"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.24277777777778, 42.37027777777778]}, "properties": {"name": "Верхний Убекимахи"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.230555555555554, 42.277499999999996]}, "properties": {"name": "Балхар"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.259166666666665, 42.257777777777775]}, "properties": {"name": "Цуликана"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.305, 42.224444444444444]}, "properties": {"name": "Шуxты"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.2, 42.3]}, "properties": {"name": "Кули"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.31527777777777, 42.78138888888889]}, "properties": {"name": "Риквани"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.31861111111112, 42.73166666666667]}, "properties": {"name": "Кижани"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.31861111111112, 42.73166666666667]}, "properties": {"name": "Зило"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["46.621332", "43.493326"]}, "properties": {"name": "Тукита"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.347500000000004, 42.55027777777777]}, "properties": {"name": "Тад-Магитль"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.301111111111105, 42.55833333333333]}, "properties": {"name": "Тлибишо"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.166666666666664, 41.61666666666667]}, "properties": {"name": "Гельмец"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.916666666666664, 42.03333333333333]}, "properties": {"name": "Джавгат"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [45.98277777777778, 42.176944444444445]}, "properties": {"name": "Генух"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [45.958333333333336, 42.19305555555555]}, "properties": {"name": "Кидеро"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.121944444444445, 42.13361111111111]}, "properties": {"name": "Бежта"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.416666666666664, 41.53333333333333]}, "properties": {"name": "Рутул"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.53333333333333, 41.5]}, "properties": {"name": "Хлют"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.214444444444446, 41.69611111111111]}, "properties": {"name": "Ихрек"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.565, 41.28527777777778]}, "properties": {"name": "Фий"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.44499999999999, 41.376666666666665]}, "properties": {"name": "Хнов"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [158.69472222222223, 55.93055555555555]}, "properties": {"name": "Эссо"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [46.23694444444445, 56.20583333333334]}, "properties": {"name": "Микряково"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [52.150555555555556, 58.01722222222222]}, "properties": {"name": "Шамардан"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["87.959170", "65.793214"]}, "properties": {"name": "Туруханск"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["86.278521", "62.487273"]}, "properties": {"name": "Келлог"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.461666666666666, 41.30472222222222]}, "properties": {"name": "Гдым"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.166666666666664, 41.56666666666667]}, "properties": {"name": "Курдул"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.31111111111111, 42.62833333333333]}, "properties": {"name": "Чанкурбе"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.29666666666667, 42.66555555555556]}, "properties": {"name": "Доргели"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.26027777777778, 42.63722222222222]}, "properties": {"name": "Чабанмахи"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.225, 42.635555555555555]}, "properties": {"name": "Дуранги"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.79472222222222, 42.17638888888889]}, "properties": {"name": "Маллакент"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.77305555555555, 42.20527777777778]}, "properties": {"name": "Чумли"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.841944444444444, 42.18444444444444]}, "properties": {"name": "Тумеллер"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [47.82916666666667, 42.20416666666667]}, "properties": {"name": "Янгикент"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": [98.81666666666666, 2.5833333333333335]}, "properties": {"name": "Парапат, Туктук"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["46.22", "42.665"]}, "properties": {"name": "Ботлих"}}, {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["67.241944", "63.702230"]}, "properties": {"name": "Казым"}}];
+
+
+        function fieldsCreate(fields) {
+            var fieldsStr = "";
+            for (index = 0; index < fields.length; index++) {
+                fieldsStr = fieldsStr + "<li class='list-group-item'>" + fields[index] + "</li>";
+            };
+            return fieldsStr
+        }
+
+        function onEachFeature(feature, layer) {
+            layer.bindPopup(
+            "<ul class='list-group list-group'>" +
+            "Экспа1, Экспа2" + "</ul>" +
+            "<br><i><a href='#'>подробнее</i>"
+
+            );
+        };
+
+        var geojson = L.geoJSON(someFeatures, {
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                    return L.marker(latlng,{
+                    icon: new L.DivIcon({
+                                            className: 'mypin',
+                                            html: '<div class="pin"><h6><div class="badge badge-light border">'+feature.properties.name+'</div><br><div class="text-center" style="margin-top: -3.5px">|</div></h6></div>',
+                                            iconSize: null,
+                                            popupAnchor: [0,-35],
+                                            })
+                                        })
                 }
+        });
 
-                myMap.geoObjects.add(myCollection);
-                myMap.controls.add("typeSelector").add("zoomControl");
-            });
+        var clusters = L.markerClusterGroup({
+            showCoverageOnHover: false,
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                                    className: 'div',
+                                    html: '<h5><span class="badge rounded-circle badge-light py-2 shadow" style="width: 40px;height: 40px; border: 3px solid #dee2e6">' + cluster.getChildCount() + '</span></h5>'
+                                    });
+            }
+        });
+        clusters.addLayer(geojson);
+        mymap.addLayer(clusters);
         </script>
-        <div class="pt-3" id="MainMap" style="width:100%;height:500px;"></div>
     </div>
   <footer class="border-top my-3 pt-3 text-center">
     <img class="mb-2" src="http://abali.ru/wp-content/uploads/2013/06/emblema_vysshej_shkoly_jekonomik_vshje.png" alt="" width="24" height="24">
@@ -97,5 +241,14 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>
 </body>
 </html>
