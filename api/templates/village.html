@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-10 p-0">
+    <h2 class="title">{% if village.name.rus %} {{village.name.rus }} {% endif %}
+      {% if village.name.eng %} / {{village.name.eng }} {% endif %}
+      {% if village.name.local %} / {{village.name.local }} {% endif %}</h2>
+    <h3 class="card-subtitle mb-2 text-muted">Республика Дагестан, Гунибский район (в 1928 году перенесен из Чародинского района)</h3>
+    </div>
+    <div class="col-2 p-0">
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownExpeditions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Экспедиции</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownExpeditions">
+          <a class="dropdown-item" href="mgb.html">Мегебская экспедиция</a>
+          <a class="dropdown-item" href="chu.html">Цудахарская экспедиция</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <dl class="row my-3">
+      <dt class="col-sm-4">Водоем</dt>
+      <dd class="col-sm-8">Не находится на берегу водоема.</dd>
+    </dl>
+  </div>
+  <div class="row">
+    <script src="http://api-maps.yandex.ru/2.0/?load=package.full&mode=release&lang=ru-RU" type="text/javascript"></script>
+    <script type="text/javascript">
+      ymaps.ready(function () {
+          var myMap = new ymaps.Map("MainMap", {
+              center: [ {{ village.coords.lat }}, {{ village.coords.long }} ],
+              zoom: 12,
+              type: "yandex#map"
+          });
+
+          var coords = [[{{ village.coords.lat }}, {{ village.coords.long }}]],
+          myCollection = new ymaps.GeoObjectCollection({}, {
+          preset: 'twirl#blackIcon'});
+
+          for (var i = 0; i < coords.length; i++) {
+          myCollection.add(new ymaps.Placemark(coords[i]));
+          }
+
+          myMap.geoObjects.add(myCollection);
+          myMap.controls.add("typeSelector").add("zoomControl");
+      });
+    </script>
+    <div class="pt-0 shadow mb-3" id="MainMap" style="width:100%;height:400px;"></div>
+  </div>
+  <div class="row mb-3">
+    <div class="card bg-light">
+      <div class="card-header">
+        <div class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active text-secondary" id="nav-population-tab" data-toggle="tab" href="#nav-population" role="tab" aria-controls="nav-population" aria-selected="true">Население</a>
+            <a class="nav-item nav-link text-secondary" id="nav-lang-tab" data-toggle="tab" href="#nav-lang" role="tab" aria-controls="nav-lang" aria-selected="false">Идиомы</a>
+            <a class="nav-item nav-link text-secondary" id="nav-contacts-tab" data-toggle="tab" href="#nav-contacts" role="tab" aria-controls="nav-contacts" aria-selected="false">Языковые контакты</a>
+            <a class="nav-item nav-link text-secondary" id="nav-edu-tab" data-toggle="tab" href="#nav-edu" role="tab" aria-controls="nav-edu" aria-selected="false">Образование</a>
+        </div>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="card-body tab-pane fade show active" id="nav-population" role="tabpanel" aria-labelledby="nav-population-tab">
+          <div class="card-text">
+            <dl class="row mb-0">
+              <dt class="col-sm-4">Численность населения</dt>
+              <dd class="col-sm-8">733</dd>
+
+              <dt class="col-sm-4">Численность в разные годы</dt>
+              <dd class="col-sm-8"><p>1886:727<br>1895:762<br>1926:710<br>2010:702<br>2019:733</p></dd>
+
+              <dt class="col-sm-2">Соседи</dt>
+              <dd class="col-sm-10"><p>лакцы (12км)<br>аварцы (4,6км)</p></dd>
+
+              <dt class="col-sm-4">Этнические группы, проживающие в селе</dt>
+              <dd class="col-sm-8">даргинцы<br>аварцы</dd>
+
+              <dt class="col-sm-4">Как получилась данная ситуация?</dt>
+              <dd class="col-sm-8">Исконная ситуация, смешанные браки с девушками из соседних аварских сел</dd>
+
+              <dt class="col-sm-4">Смешанные семьи</dt>
+              <dd class="col-sm-8">Смешанные браки не приветствуются, однако допускались браки с аварками из соседних селений</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="card-body tab-pane fade" id="nav-lang" role="tabpanel" aria-labelledby="nav-lang-tab">
+          <div class="card-text">
+            <dl class="row mb-0">
+              <dt class="col-sm-4">Идиомы, на которых часто говорят</dt>
+              <dd class="col-sm-8">мегебский<br>русский<br>аварский</dd>
+
+              <dt class="col-sm-4">Местный идиом</dt>
+              <dd class="col-sm-8">Мегебский / Megeb / mege1234</dd>
+
+              <dt class="col-sm-4">Возрастные группы и владение идиомом</dt>
+              <dd class="col-sm-8"><p>
+                Все до 30 лет - знают русский и мегебский, во многом дети почти с рождения осваивают русский, благодаря телевизору<br>
+                Люди старше 30 лет - помимо русского и мегебского владеют аварским<br>
+                Люди старше 70 лет - могут владеть акушинским диалектом даргинского языка
+              </p></dd>
+
+              <dt class="col-sm-4">Насколько распространнено общение на местном идиоме?</dt>
+              <dd class="col-sm-8">Все говорят друг с другом на местном языке</dd>
+
+            </dl>
+          </div>
+        </div>
+        <div class="card-body tab-pane fade" id="nav-contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
+          <div class="card-text">
+            <dl class="row mb-0">
+              <dt class="col-sm-5">Были ли раньше в селе носители других языков (диалектов)?</dt>
+              <dd class="col-sm-7">даргинский/акушинский:1950-1970-е<br>обохский:до 2000<br>аварский: до настоящего времени</dd>
+
+              <dt class="col-sm-5">С носителями каких идиомов (кроме родного) контактировали в прошлом и/ или контактируют сейчас жители села?</dt>
+              <dd class="col-sm-7"><p>В 1950-1970 годах в колхозе работали люди из села Акуша<br>до 2000 в старшей школе в Мегебе учились дети из Обоха<br>сейчас в интернате живут несколько ребят из разных сел со всего Дагестана</p></dd>
+
+              <dt class="col-sm-5">Было ли принято ходить или ездить на какие-то крупные рынки; куда, на каком языке там общались?</dt>
+              <dd class="col-sm-7"><p>По четвергам ходили на лакский рынок в Кумух, общались на лакском</p></dd>
+
+              <dt class="col-sm-5">Было ли принято гонять куда-то скот, куда, на каком языке там общались?</dt>
+              <dd class="col-sm-7">рядом есть кутан колхоза имени Гаджиева</dd>
+
+              <dt class="col-sm-5">Есть ли люди, которые владеют несколькими языками (идиомами)? Если да, то какими?</dt>
+              <dd class="col-sm-7">русский<br>мегебский<br>аварский</dd>
+
+              <dt class="col-sm-5">Насколько часто распространен билингвизм?</dt>
+              <dd class="col-sm-7">все владеют русским и мегебским<br>люди после 40 владеют аварским</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="card-body tab-pane fade" id="nav-edu" role="tabpanel" aria-labelledby="nav-edu-tab">
+          <div class="card-text">
+            <dl class="row mb-0">
+              <dt class="col-sm-5">Есть ли в селе школа?</dt>
+              <dd class="col-sm-7">Да</dd>
+
+              <dt class="col-sm-5">Какая школа?</dt>
+              <dd class="col-sm-7">Полная</dd>
+
+              <dt class="col-sm-5">В каком году открылись старшие классы?</dt>
+              <dd class="col-sm-7">Были сразу</dd>
+
+              <dt class="col-sm-5">Есть ли в школе интернат?</dt>
+              <dd class="col-sm-7">Да</dd>
+
+              <dt class="col-sm-5">Учатся ли в старших классах дети из других селений? Если да, то из каких?</dt>
+              <dd class="col-sm-7">До 2000х учились дети из Обоха, сейчас тоже есть дети из других селений</dd>
+
+              <dt class="col-sm-5">Какие языки (идиомы) преподаются в школе?</dt>
+              <dd class="col-sm-7">Литературный аварский<br>русский</dd>
+
+              <dt class="col-sm-5">На каком языке в школе учат читать и писать?</dt>
+              <dd class="col-sm-7">Литературный аварский<br>русский</dd>
+
+              <dt class="col-sm-5">Если есть преподавание на “местном” языке, сильно ли отличается преподаваемый вариант от того, которым люди владеют?</dt>
+              <dd class="col-sm-7">Вместо мегебского в школе преподают аварский, так как аварцы преобладают в этой местности</dd>
+
+              <dt class="col-sm-5">Когда в селе распространились телевизоры?</dt>
+              <dd class="col-sm-7">1980-е</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>
+
+{% endblock %}
