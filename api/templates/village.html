@@ -7,7 +7,7 @@
     <h2 class="title">{% if village.name.rus %} {{village.name.rus }} {% endif %}
       {% if village.name.eng %} / {{village.name.eng }} {% endif %}
       {% if village.name.local %} / {{village.name.local }} {% endif %}</h2>
-    <h3 class="card-subtitle mb-2 text-muted">Республика Дагестан, Гунибский район (в 1928 году перенесен из Чародинского района)</h3>
+    <h3 class="card-subtitle mb-2 text-muted"> {{ village.region }}</h3>
     </div>
     <div class="col-2 p-0">
       <div class="dropdown">
@@ -21,8 +21,10 @@
   </div>
   <div class="row">
     <dl class="row my-3">
-      <dt class="col-sm-4">Водоем</dt>
-      <dd class="col-sm-8">Не находится на берегу водоема.</dd>
+      {% if village.river %}
+        <dt class="col-sm-4">Водоем</dt>
+        <dd class="col-sm-8">{{ village.river }}</dd>
+      {% endif %}
     </dl>
   </div>
   <div class="row">
@@ -47,7 +49,7 @@
           myMap.controls.add("typeSelector").add("zoomControl");
       });
     </script>
-    <div class="pt-0 shadow mb-3" id="MainMap" style="width:100%;height:400px;"></div>
+    <div class="pt-0 shadow mb-3" id="MainMap" style="width:100%;height:350px;"></div>
   </div>
   <div class="row mb-3">
     <div class="card bg-light">
@@ -63,44 +65,63 @@
         <div class="card-body tab-pane fade show active" id="nav-population" role="tabpanel" aria-labelledby="nav-population-tab">
           <div class="card-text">
             <dl class="row mb-0">
-              <dt class="col-sm-4">Численность населения</dt>
-              <dd class="col-sm-8">733</dd>
+              {% if village.population.current_value %}
+                <dt class="col-sm-4">Численность населения</dt>
+                <dd class="col-sm-8">{{ village.population.current_value }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Численность в разные годы</dt>
-              <dd class="col-sm-8"><p>1886:727<br>1895:762<br>1926:710<br>2010:702<br>2019:733</p></dd>
+              {% if village.population.chronology %}
+                <dt class="col-sm-4">Численность в разные годы</dt>
+                <dd class="col-sm-8"> {% for year in village.population.chronology %}
+                  {{ year }}<br>
+                                      {% endfor %}
+                </dd>
+              {% endif %}
 
-              <dt class="col-sm-2">Соседи</dt>
-              <dd class="col-sm-10"><p>лакцы (12км)<br>аварцы (4,6км)</p></dd>
+              {% if village.population.ethnos %}
+                <dt class="col-sm-4">Этнические группы, проживающие в селе</dt>
+                <dd class="col-sm-8">{% for e in village.population.ethnos %}
+                                          {{ e }}<br>
+                                      {% endfor %}</dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Этнические группы, проживающие в селе</dt>
-              <dd class="col-sm-8">даргинцы<br>аварцы</dd>
+              {% if village.population.why_ethnos %}
+                <dt class="col-sm-4">Как получилась данная ситуация?</dt>
+                <dd class="col-sm-8">{{ village.population.why_ethnos }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Как получилась данная ситуация?</dt>
-              <dd class="col-sm-8">Исконная ситуация, смешанные браки с девушками из соседних аварских сел</dd>
-
-              <dt class="col-sm-4">Смешанные семьи</dt>
-              <dd class="col-sm-8">Смешанные браки не приветствуются, однако допускались браки с аварками из соседних селений</dd>
+              {% if village.population.neighbours %}
+                <dt class="col-sm-4">Соседи</dt>
+                <dd class="col-sm-8">{{ village.population.neighbours }}</dd>
+              {% endif %}
             </dl>
           </div>
         </div>
         <div class="card-body tab-pane fade" id="nav-lang" role="tabpanel" aria-labelledby="nav-lang-tab">
           <div class="card-text">
             <dl class="row mb-0">
-              <dt class="col-sm-4">Идиомы, на которых часто говорят</dt>
-              <dd class="col-sm-8">мегебский<br>русский<br>аварский</dd>
+              {% if village.idioms.freq_idioms %}
+                <dt class="col-sm-4">Идиомы, на которых часто говорят</dt>
+                <dd class="col-sm-8">{% for lang in village.idioms.freq_idioms %}
+                                          {{ lang }}<br>
+                                      {% endfor %}
+                </dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Местный идиом</dt>
-              <dd class="col-sm-8">Мегебский / Megeb / mege1234</dd>
+              {% if village.idioms.local_idiom %}
+                <dt class="col-sm-4">Местный идиом</dt>
+                <dd class="col-sm-8">{{ village.idioms.local_idiom }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Возрастные группы и владение идиомом</dt>
-              <dd class="col-sm-8"><p>
-                Все до 30 лет - знают русский и мегебский, во многом дети почти с рождения осваивают русский, благодаря телевизору<br>
-                Люди старше 30 лет - помимо русского и мегебского владеют аварским<br>
-                Люди старше 70 лет - могут владеть акушинским диалектом даргинского языка
-              </p></dd>
+              {% if village.idioms.ages_of_idiom %}
+                <dt class="col-sm-4">Возрастные группы и владение идиомом</dt>
+                <dd class="col-sm-8">{{ village.idioms.ages_of_idiom }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-4">Насколько распространнено общение на местном идиоме?</dt>
-              <dd class="col-sm-8">Все говорят друг с другом на местном языке</dd>
+              {% if village.idioms.idiom_spread %}
+                <dt class="col-sm-4">Насколько распространнено общение на местном идиоме?</dt>
+                <dd class="col-sm-8">{{ village.idioms.idiom_spread }}</dd>
+              {% endif %}
 
             </dl>
           </div>
@@ -108,55 +129,161 @@
         <div class="card-body tab-pane fade" id="nav-contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
           <div class="card-text">
             <dl class="row mb-0">
-              <dt class="col-sm-5">Были ли раньше в селе носители других языков (диалектов)?</dt>
-              <dd class="col-sm-7">даргинский/акушинский:1950-1970-е<br>обохский:до 2000<br>аварский: до настоящего времени</dd>
+              {% if village.population.mixed_families %}
+                <dt class="col-sm-4">Смешанные семьи</dt>
+                <dd class="col-sm-8">{{ village.population.mixed_families }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">С носителями каких идиомов (кроме родного) контактировали в прошлом и/ или контактируют сейчас жители села?</dt>
-              <dd class="col-sm-7"><p>В 1950-1970 годах в колхозе работали люди из села Акуша<br>до 2000 в старшей школе в Мегебе учились дети из Обоха<br>сейчас в интернате живут несколько ребят из разных сел со всего Дагестана</p></dd>
+              {% if village.population.wife_lang %}
+                <dt class="col-sm-4">Если в селе оказывается жена/муж из другого места, на каком языке (диалектов) она/он говорит с супругом? с детьми?</dt>
+                <dd class="col-sm-8">{{ village.contacts.wife_lang }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Было ли принято ходить или ездить на какие-то крупные рынки; куда, на каком языке там общались?</dt>
-              <dd class="col-sm-7"><p>По четвергам ходили на лакский рынок в Кумух, общались на лакском</p></dd>
+              {% if village.contacts.another_langs %}
+                <dt class="col-sm-5">Были ли раньше в селе носители других языков (диалектов)?</dt>
+                <dd class="col-sm-7">{% for lang in village.contacts.another_langs %}
+                                          {{ lang }}<br>
+                                      {% endfor %}
+                </dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Было ли принято гонять куда-то скот, куда, на каком языке там общались?</dt>
-              <dd class="col-sm-7">рядом есть кутан колхоза имени Гаджиева</dd>
+              {% if village.contacts.contact_idioms %}
+                <dt class="col-sm-5">С носителями каких идиомов (кроме родного) контактировали в прошлом и/или контактируют сейчас жители села?</dt>
+                <dd class="col-sm-7"><p>{% for lang in village.contacts.contact_idioms %}
+                                          {{ lang }}<br>
+                                        {% endfor %}</p></dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Есть ли люди, которые владеют несколькими языками (идиомами)? Если да, то какими?</dt>
-              <dd class="col-sm-7">русский<br>мегебский<br>аварский</dd>
+              {% if village.contacts.market %}
+                <dt class="col-sm-5">Было ли принято ходить или ездить на какие-то крупные рынки; куда, на каком языке там общались?</dt>
+                <dd class="col-sm-7"><p>{{ village.contacts.market }}</p></dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Насколько часто распространен билингвизм?</dt>
-              <dd class="col-sm-7">все владеют русским и мегебским<br>люди после 40 владеют аварским</dd>
+              {% if village.contacts.road %}
+                <dt class="col-sm-5">Проходила ли через село какая-то дорога, кто и зачем заезжал в село, на каком языке с ними общались?</dt>
+                <dd class="col-sm-7"><p>{{ village.contacts.road }}</p></dd>
+              {% endif %}
+
+              {% if village.contacts.cattle %}
+                <dt class="col-sm-5">Было ли принято гонять куда-то скот, куда, на каком языке там общались?</dt>
+                <dd class="col-sm-7">{{ village.contacts.cattle }}</dd>
+              {% endif %}
+
+              {% if village.contacts.several_idioms %}
+                <dt class="col-sm-5">Есть ли люди, которые владеют несколькими языками (идиомами)? Если да, то какими?</dt>
+                <dd class="col-sm-7">{% for lang in village.contacts.several_idioms %}
+                                          {{ lang }}<br>
+                                        {% endfor %}</dd>
+              {% endif %}
+
+              {% if village.contacts.bilinguism %}
+                <dt class="col-sm-5">Насколько часто распространен билингвизм?</dt>
+                <dd class="col-sm-7">{{ village.contacts.bilinguism }}</dd>
+              {% endif %}
+
+              {% if village.contacts.russian_understanding_age %}
+                <dt class="col-sm-5">В каком возрасте дети начинают понимать русский язык?</dt>
+                <dd class="col-sm-7">{{ village.contacts.russian_understanding_age }}</dd>
+              {% endif %}
+
+              {% if village.contacts.russian_speaking_age %}
+                <dt class="col-sm-5">В каком возрасте дети начинают говорить по-русски?</dt>
+                <dd class="col-sm-7">{{ village.contacts.russian_speaking_age }}</dd>
+              {% endif %}
             </dl>
           </div>
         </div>
         <div class="card-body tab-pane fade" id="nav-edu" role="tabpanel" aria-labelledby="nav-edu-tab">
           <div class="card-text">
             <dl class="row mb-0">
-              <dt class="col-sm-5">Есть ли в селе школа?</dt>
-              <dd class="col-sm-7">Да</dd>
+              {% if village.education.if_children_garden %}
+                <dt class="col-sm-5">Есть ли в селе детский сад? Если да, то на каком языке воспитатели общаются с детьми?</dt>
+                <dd class="col-sm-7">{{ village.education.if_children_garden }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Какая школа?</dt>
-              <dd class="col-sm-7">Полная</dd>
+              {% if village.education.if_school %}
+                <dt class="col-sm-5">Есть ли в селе школа?</dt>
+                <dd class="col-sm-7">{{ village.education.if_school }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">В каком году открылись старшие классы?</dt>
-              <dd class="col-sm-7">Были сразу</dd>
+              {% if village.education.school_type %}
+                <dt class="col-sm-5">Какая школа?</dt>
+                <dd class="col-sm-7">{{ village.education.school_type }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Есть ли в школе интернат?</dt>
-              <dd class="col-sm-7">Да</dd>
+              {% if village.education.school_population %}
+                <dt class="col-sm-5">Сколько примерно детей учится в школе сейчас?</dt>
+                <dd class="col-sm-7">{{ village.education.school_population }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Учатся ли в старших классах дети из других селений? Если да, то из каких?</dt>
-              <dd class="col-sm-7">До 2000х учились дети из Обоха, сейчас тоже есть дети из других селений</dd>
+              {% if village.education.school_opening %}
+                <dt class="col-sm-5">В каком году была открыта школа?</dt>
+                <dd class="col-sm-7">{{ village.education.school_opening }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Какие языки (идиомы) преподаются в школе?</dt>
-              <dd class="col-sm-7">Литературный аварский<br>русский</dd>
+              {% if village.education.higher_school_year %}
+                <dt class="col-sm-5">В каком году открылись старшие классы?</dt>
+                <dd class="col-sm-7">{{ village.education.higher_school_year }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">На каком языке в школе учат читать и писать?</dt>
-              <dd class="col-sm-7">Литературный аварский<br>русский</dd>
+              {% if village.education.boarding %}
+                <dt class="col-sm-5">Есть ли в школе интернат?</dt>
+                <dd class="col-sm-7">{{ village.education.boarding }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Если есть преподавание на “местном” языке, сильно ли отличается преподаваемый вариант от того, которым люди владеют?</dt>
-              <dd class="col-sm-7">Вместо мегебского в школе преподают аварский, так как аварцы преобладают в этой местности</dd>
+              {% if village.education.higher_school_closed %}
+                <dt class="col-sm-5">Закрылись ли старшие классы? Если да, то в каком году?</dt>
+                <dd class="col-sm-7">{{ village.education.higher_school_closed }}</dd>
+              {% endif %}
 
-              <dt class="col-sm-5">Когда в селе распространились телевизоры?</dt>
-              <dd class="col-sm-7">1980-е</dd>
+              {% if village.education.another_school_changes %}
+                <dt class="col-sm-5">Были ли другие изменения?</dt>
+                <dd class="col-sm-7">{{ village.education.another_school_changes }}</dd>
+              {% endif %}
+
+              {% if village.education.where_higher_school %}
+                <dt class="col-sm-5">Куда ездят школьники доучиваться в старших классах?</dt>
+                <dd class="col-sm-7">{{ village.education.where_higher_school }}</dd>
+              {% endif %}
+
+              {% if village.education.alien_children %}
+                <dt class="col-sm-5">Учатся ли в старших классах дети из других селений? Если да, то из каких?</dt>
+                <dd class="col-sm-7">{{ village.education.alien_children }}</dd>
+              {% endif %}
+
+              {% if village.education.study_langs %}
+                <dt class="col-sm-5">Какие языки (идиомы) преподаются в школе?</dt>
+                <dd class="col-sm-7">{% for lang in village.education.study_langs %}
+                                          {{ lang }}<br>
+                                     {% endfor %}</dd>
+              {% endif %}
+
+              {% if village.education.writting_langs %}
+                <dt class="col-sm-5">На каком языке в школе учат читать и писать?</dt>
+                <dd class="col-sm-7">{% for lang in village.education.writting_langs %}
+                                          {{ lang }}<br>
+                                     {% endfor %}</dd>
+              {% endif %}
+
+              {% if village.education.langs_difference %}
+                <dt class="col-sm-5">Если есть преподавание на "местном" языке, сильно ли отличается преподаваемый вариант от того, которым люди владеют?</dt>
+                <dd class="col-sm-7">{{ village.education.langs_difference }}</dd>
+              {% endif %}
+
+              {% if village.education.first_newcomers %}
+                <dt class="col-sm-5">Кто преподавал в школе в первые годы ее существования?</dt>
+                <dd class="col-sm-7">{{ village.education.first_newcomers }}</dd>
+              {% endif %}
+
+              {% if village.education.where_newcomers_from %}
+                <dt class="col-sm-5">Откуда были приезжие учителя?</dt>
+                <dd class="col-sm-7">{{ village.education.where_newcomers_from }}</dd>
+              {% endif %}
+
+              {% if village.education.tv %}
+                <dt class="col-sm-5">Когда в селе распространились телевизоры?</dt>
+                <dd class="col-sm-7">{{ village.education.tv }}</dd>
+              {% endif %}
             </dl>
           </div>
         </div>
