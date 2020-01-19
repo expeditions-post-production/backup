@@ -236,7 +236,7 @@ class Population:
     def get_neighbours(self):
         db = db_utils.Database()
         neighbours = db.execute("SELECT neighbour_idiom_villages FROM villages WHERE village_id = ?", (self.idx,))
-        return neighbours[0][0] if neighbours[0][0] else None
+        return neighbours[0][0].split(";") if neighbours[0][0] else None
 
     def get_mixed_families(self):
         db = db_utils.Database()
@@ -251,7 +251,7 @@ class Village:
         self.coords = self.get_coordinates()
         self.region = self.get_region()
         self.river = self.get_river()
-        self.expeditions = None
+        self.expeditions = self.get_expeditions()
         self.population = Population(self.idx)
         self.idioms = Idiom(self.idx)
         self.contacts = Contacts(self.idx)
@@ -277,3 +277,9 @@ class Village:
         db = db_utils.Database()
         river = db.execute("SELECT river FROM villages WHERE village_id = ?", (self.idx,))
         return river[0][0] if river[0][0] else None
+
+    def get_expeditions(self):
+        db = db_utils.Database()
+        series = db.execute("SELECT series_ids FROM villages WHERE village_id = ?", (self.idx,))
+        series_list = series[0][0].split(";")
+        return [sup.ExpSeries(idx) for idx in series_list]

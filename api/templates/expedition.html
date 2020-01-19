@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+      <h1>{{ expedition.name }}</h1>
+      {% if expedition.if_open_russia %}
+    <p class="text-muted">Поддержано проектом "Открываем Россию Заново"</p>
+      {% endif %}
+      <p class="lead my-3">{{ expedition.description }}</p>
+  {% if expedition.photos %}
+  <div class="row mx-5 px-3 my-4 py-4">
+      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          {% for photo in expedition.photos %}
+            <li data-target="#carouselExampleCaptions" data-slide-to="{{ photo.idx }}" {% if photo.idx == 0 %} class="active" {% endif %}></li>
+          {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+        {% for photo in expedition.photos %}
+          <div class="carousel-item{{ photo.if_active }}">
+            <img src="{{ photo.route }}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <p>{{ photo.description }}</p>
+            </div>
+          </div>
+        {% endfor %}
+          </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+  </div>
+  {% endif %}
+
+  {% if expedition.text %}
+  <div class="row">
+    <div class="card mb-3 col-12 p-0">
+      <div class="card-header text-center">
+        <b>Пример отглоссированного текста с аудиозаписью</b>
+      </div>
+      <div class="card-body">
+        {% autoescape false %}
+        {{ expedition.text }}
+        {% endautoescape %}
+      </div>
+      <div class="card-footer text-center">
+        <audio controls>
+          <source src="" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <nav>
+    <div class="nav nav-tabs nav-fill" id="nav-years" role="tablist">
+      {% for exp in expedition.expeditions %}
+      <a class="nav-item nav-link{{ exp.if_active }} text-secondary" id="nav-{{ exp.idx }}-tab" data-toggle="tab" href="#nav-{{ exp.idx }}" role="tab" aria-controls="nav-{{ exp.idx }}" aria-selected="true"><b>{{ exp.year }}</b></a>
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="row tab-content p-4" id="nav-yearsContent">
+    {% for exp in expedition.expeditions %}
+    <div class="tab-pane fade{{ exp.if_active }}" style="width:100%" id="nav-{{ exp.idx }}" role="tabpanel" aria-labelledby="nav-{{ exp.idx }}-tab">
+      <div class="row">
+        <div class="col-sm-9">
+          <h4>Участники экспедиции</h4>
+          <ol>
+            {% autoescape false %}
+            {% for part in exp.participants %}
+            <li>{{ part }}</li>
+            {% endfor %}
+            {% endautoescape %}
+          </ol>
+          <hr>
+          <h4>Публикации по результатам экспедиции</h4>
+          <p class="lead">
+            {% autoescape false %}
+            {{ exp.publications }}
+            {% endautoescape %}
+          </p>
+        </div>
+        <div class="col-sm-3">
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action disabled p-2 bg-light text-body">
+              География экспедиции:
+            </a>
+            {% for village in exp.villages %}
+              <a href="{{ url_for('village_info', village_idx=village.idx) }}" class="list-group-item list-group-item-action p-1 pl-2">{{ village.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

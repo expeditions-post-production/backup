@@ -13,8 +13,9 @@
       <div class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownExpeditions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Экспедиции</a>
         <div class="dropdown-menu" aria-labelledby="dropdownExpeditions">
-          <a class="dropdown-item" href="mgb.html">Мегебская экспедиция</a>
-          <a class="dropdown-item" href="chu.html">Цудахарская экспедиция</a>
+          {% for exp in village.expeditions %}
+            <a class="dropdown-item" href="{{ url_for('expedition_info', series_idx=exp.idx) }}">{{ exp.name }}</a>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -92,7 +93,11 @@
 
               {% if village.population.neighbours %}
                 <dt class="col-sm-4">Соседи</dt>
-                <dd class="col-sm-8">{{ village.population.neighbours }}</dd>
+             <dd class="col-sm-8"> {% for n in village.population.neighbours %}
+                {{ n }}<br>
+               {% endfor %}
+             </dd>
+
               {% endif %}
             </dl>
           </div>
