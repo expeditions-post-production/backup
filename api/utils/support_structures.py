@@ -32,6 +32,17 @@ class ExpSeries:
         return name[0][0]
 
 
+class DirectionContent:
+    def __init__(self, dir_name):
+        self.direction = dir_name
+        self.series = self.get_series()
+
+    def get_series(self):
+        db = db_utils.Database()
+        series = db.execute("SELECT series_id FROM basic_info WHERE direction = ?", (self.direction,))
+        return [ExpSeries(s[0]) for s in series]
+
+
 class Photo:
     def __init__(self, info, idx):
         self.route = "../static/photos/" + info.split(":")[0]
