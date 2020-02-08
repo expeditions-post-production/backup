@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from api.db_handler import db_utils
 from api.utils.village_handler import Village
 from api.utils.expedition_handler import ExpeditionSeries
+from api.utils.search_handler import SearchInfo
 from api.utils.support_structures import DirectionContent
 
 app = Flask(__name__)
@@ -42,7 +43,8 @@ def contacts():
 
 @app.route("/exp_search")
 def expedition_search():
-    return render_template("exp_search.html")
+    expeditions = SearchInfo().expeditions
+    return render_template("exp_search.html", expeditions=expeditions)
 
 
 @app.route("/villages/<village_idx>")
