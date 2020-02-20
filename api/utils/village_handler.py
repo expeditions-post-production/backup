@@ -281,5 +281,5 @@ class Village:
     def get_expeditions(self):
         db = db_utils.Database()
         series = db.execute("SELECT series_ids FROM villages WHERE village_id = ?", (self.idx,))
-        series_list = series[0][0].split(";")
+        series_list = series[0][0].split(";") if series[0][0] else []
         return [sup.ExpSeries(idx) for idx in series_list]
