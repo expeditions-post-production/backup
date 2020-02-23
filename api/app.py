@@ -1,3 +1,10 @@
+import os
+import sys
+
+
+PROJECT_ROOT = os.path.abspath("..")
+sys.path.append(PROJECT_ROOT)
+
 from api.pages import app
 
 
