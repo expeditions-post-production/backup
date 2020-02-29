@@ -1,9 +1,9 @@
 from flask import Flask, render_template
-from api.db_handler import db_utils
-from api.utils.village_handler import Village
-from api.utils.expedition_handler import ExpeditionSeries
-from api.utils.search_handler import SearchInfo
-from api.utils.support_structures import DirectionContent
+from FieldTrips.db_handler import db_utils
+from FieldTrips.utils.village_handler import Village
+from FieldTrips.utils.expedition_handler import ExpeditionSeries
+from FieldTrips.utils.search_handler import SearchInfo
+from FieldTrips.utils.support_structures import DirectionContent
 
 app = Flask(__name__)
 

@@ -1,5 +1,5 @@
-from api.db_handler import db_utils
-from api.utils import support_structures as sup
+from FieldTrips.db_handler import db_utils
+from FieldTrips.utils import support_structures as sup
 
 
 class Expedition:
@@ -34,10 +34,10 @@ class Expedition:
         final_participants = []
         for part in participants:
             name, affiliation, supervisor = part
-            full_name = f"{name} ({affiliation})"
+            full_name = "%s (%s)" % (name, affiliation)
             if supervisor:
                 full_name += " - руководитель"
-                full_name = f"<b>{full_name}</b>"
+                full_name = "<b>%s</b>" % (full_name,)
             final_participants.append(full_name)
         return final_participants
 
@@ -89,30 +89,25 @@ class ExpeditionSeries:
         text_table = ""
         while i < len(transcript):
             if i + 12 < len(transcript):
-                text_table += f"""
+                text_table += """
                               <table class="table table-borderless table-sm table-responsive">
                                 <tbody>
-                                    <tr>
-                                {''.join([f"<td>{t}</td>" for t in transcript[i: i + 12]])}
-                                    </tr>
-                                    <tr>
-                                {''.join([f"<td>{t}</td>" for t in glosses[i: i + 12]])}
-                                    </tr>
+                                    <tr>""" + ''.join(["<td>%s</td>" % (t,) for t in transcript[i: i + 12]]) + \
+                                    """</tr>
+                                    <tr> """ + ''.join(["<td>%s</td>" % (t,) for t in glosses[i: i + 12]]) + \
+                                    """</tr>
                                 </tbody>
                               </table>
                               """
             else:
-                text_table += f"""
-                              <table class="table table-borderless table-sm table-responsive">
+                text_table += """<table class="table table-borderless table-sm table-responsive">
                                 <tbody>
+                                    <tr>""" + ''.join(["<td>%s</td>" % (t,) for t in transcript[i: i + 12]]) + \
+                                    """</tr>
+                                    <tr> """ + ''.join(["<td>%s</td>" % (t,) for t in glosses[i: i + 12]]) + \
+                                    """</tr>
                                     <tr>
-                                {''.join([f"<td>{t}</td>" for t in transcript[i: i + 12]])}
-                                    </tr>
-                                    <tr>
-                                {''.join([f"<td>{t}</td>" for t in glosses[i: i + 12]])}
-                                    </tr>
-                                    <tr>
-                                <td colspan="11">{translation}</td>
+                                <td colspan="11">""" + translation + """</td>
                                     </tr>
                                 </tbody>
                               </table>

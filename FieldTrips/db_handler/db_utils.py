@@ -1,5 +1,5 @@
 import sqlite3
-from api.configs_reader import DATABASE_ROOT
+from FieldTrips.configs_reader import DATABASE_ROOT
 
 
 class Database:

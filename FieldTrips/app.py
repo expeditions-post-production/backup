@@ -5,7 +5,7 @@ import sys
 PROJECT_ROOT = os.path.abspath("..")
 sys.path.append(PROJECT_ROOT)
 
-from api.pages import app
+from FieldTrips.pages import app
 
 
 if __name__ == "__main__":

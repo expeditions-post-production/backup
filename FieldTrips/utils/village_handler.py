@@ -1,5 +1,5 @@
-from api.db_handler import db_utils
-from api.utils import support_structures as sup
+from FieldTrips.db_handler import db_utils
+from FieldTrips.utils import support_structures as sup
 
 
 class Education:
@@ -271,7 +271,7 @@ class Village:
         db = db_utils.Database()
         region = db.execute("SELECT region FROM villages WHERE village_id = ?", (self.idx,))
         region_before = db.execute("SELECT region_before FROM villages WHERE village_id = ?", (self.idx,))
-        return region[0][0] + f"({region_before[0][0]})" if region_before[0][0] else region[0][0]
+        return region[0][0] + "(%s)" % (region_before[0][0],) if region_before[0][0] else region[0][0]
 
     def get_river(self):
         db = db_utils.Database()

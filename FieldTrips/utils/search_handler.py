@@ -1,5 +1,5 @@
-from api.db_handler import db_utils
-from api.utils.support_structures import Village
+from FieldTrips.db_handler import db_utils
+from FieldTrips.utils.support_structures import Village
 
 
 class ExpSearchUnit:
