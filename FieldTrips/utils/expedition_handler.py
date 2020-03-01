@@ -34,7 +34,7 @@ class Expedition:
         final_participants = []
         for part in participants:
             name, affiliation, supervisor = part
-            full_name = "%s (%s)" % (name, affiliation)
+            full_name = "%s (%s)" % (name, affiliation) if affiliation else name
             if supervisor:
                 full_name += " - руководитель"
                 full_name = "<b>%s</b>" % (full_name,)
@@ -49,6 +49,7 @@ class ExpeditionSeries:
         self.name = self.get_series_name()
         self.description = self.get_description()
         self.photos = self.get_photos()
+        self.audio = self.get_audio()
         self.text = self.get_glossed_text()
         self.expeditions = self.get_expedition()
 
@@ -74,6 +75,11 @@ class ExpeditionSeries:
         if processed:
             processed[0].if_active = " active"
         return processed
+
+    def get_audio(self):
+        db = db_utils.Database()
+        audio = db.execute("SELECT audio FROM basic_info WHERE series_id = ?", (self.idx,))
+        return audio[0][0] if audio else None
 
     def get_glossed_text(self):
         db = db_utils.Database()
