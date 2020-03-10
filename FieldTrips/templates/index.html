@@ -26,7 +26,11 @@
 
         var someFeatures = [
         {% for village in villages %}
-            {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["{{ village.coords.long }}", "{{ village.coords.lat }}"]}, "properties": {"name": "{{ village.name.rus }}"}},
+            {"type": "Feature", "geometry": {"type": "Point", "coordinates": ["{{ village.coords.long }}", "{{ village.coords.lat }}"]}, "properties": {"name": "{{ village.name.rus }}", "link": "{{ url_for('village_info', village_idx=village.idx) }}", "expeditions":[
+			{% for exp in village.expeditions %}
+				{"exp_name" : "{{ exp.name }}", "exp_link": "{{ url_for('expedition_info', series_idx=exp.idx) }}"},
+			{% endfor %}
+			]}},
         {% endfor %}
         ]
 
@@ -39,11 +43,15 @@
         }
 
         function onEachFeature(feature, layer) {
+			var expeditions = "";
+			for (index = 0; index < feature.properties.expeditions.length; index++) {
+				expeditions = expeditions + "<a href='" + feature.properties.expeditions[index].exp_link + "' class='list-group-item list-group-item-action p-1'>" + feature.properties.expeditions[index].exp_name + "</a>";
+			};
             layer.bindPopup(
-            "<ul class='list-group list-group'>" +
-            "Экспа1, Экспа2" + "</ul>" +
-            "<br><i><a href='#'>подробнее</i>"
-
+			"<i><a href='" + feature.properties.link + "'>Подробнее про населенный пункт</a></i>" +
+			"<br><br>Экспедиции, которые здесь побывали:" +
+            "<ul class='list-group'>" +
+            expeditions + "</ul>"
             );
         };
 
@@ -63,7 +71,7 @@
 
         var clusters = L.markerClusterGroup({
             showCoverageOnHover: false,
-			maxClusterRadius: 15,
+			maxClusterRadius: 10,
             iconCreateFunction: function(cluster) {
                 return L.divIcon({
                                     className: 'div',
